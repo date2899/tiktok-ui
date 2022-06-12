@@ -49,6 +49,18 @@
     right: calc(var(--search-button-right) + 16px);
     transform: translateY(-50%);
 }
+
+.loading {
+    animation: spinner 0.8s linear infinite;
+}
+@keyframes spinner {
+    0% {
+        transform: translateY(-50%) rotate(0);
+    }
+    100% {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
 .search-btn {
     width: var(--search-button-right);
     height: 100%;
