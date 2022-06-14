@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
+import { useDebounce } from '~/hooks';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
@@ -19,13 +20,15 @@ const Search = () => {
 
     const inputRef = useRef();
 
+    const debounced = useDebounce(searchValue, 500);
+
     useEffect(() => {
-        if (!searchValue.trim()) {
+        if (!debounced.trim()) {
             setSearchResults([]);
             return;
         }
         setLoading(true);
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
             .then((response) => response.json())
             .then((response) => {
                 setSearchResults(response.data);
@@ -34,7 +37,7 @@ const Search = () => {
             .catch(() => {
                 setLoading(false);
             });
-    }, [searchValue]);
+    }, [debounced]);
 
     const handleClear = () => {
         setSearchValue('');
