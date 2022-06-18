@@ -39,6 +39,15 @@ const Search = () => {
         fetchApi();
     }, [debounced]);
 
+    const handleChange = (e) => {
+        const searchValue = e.target.value;
+        if (!searchValue.startsWith(' ')) {
+            setSearchValue(e.target.value);
+        }
+    };
+
+    const handleSubmit = (e) => {};
+
     const handleClear = () => {
         setSearchValue('');
         inputRef.current.focus();
@@ -72,7 +81,7 @@ const Search = () => {
                     type="text"
                     placeholder="Search accounts and videos"
                     spellCheck={false}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
 
@@ -83,7 +92,7 @@ const Search = () => {
                 )}
                 {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
-                <button className={cx('search-btn')}>
+                <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()} onClick={handleSubmit}>
                     <SearchIcon />
                 </button>
             </div>
