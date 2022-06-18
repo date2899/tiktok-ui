@@ -5,7 +5,7 @@ import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
 
-import * as searchServices from '~/apiServices/searchServices';
+import * as searchService from '~/services/searchService';
 import { useDebounce } from '~/hooks';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
@@ -31,7 +31,7 @@ const Search = () => {
         const fetchApi = async () => {
             setLoading(true);
 
-            const results = await searchServices.search(debounced);
+            const results = await searchService.search(debounced);
 
             setLoading(false);
             setSearchResults(results);
